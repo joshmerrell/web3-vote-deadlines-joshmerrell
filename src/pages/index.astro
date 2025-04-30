@@ -4,11 +4,27 @@ import '../styles/global.css';
 
 // data source
 // replace temporary JSON placeholder API
-const source = 'https://jsonplaceholder.typicode.com/users';
+const source = "https://dedline-api.netlify.app/states.json";
 // fetch the data
 const res = await fetch(source); 
 // store retreived data
-const data = await res.json();
+const states: State[] = (await res.json()).states;
+
+const title = "US Voting Info";
+
+function formatDate(deadline:string) {
+	const year = parseInt(deadline.substring(0, 4));
+	const month = deadline.substring(4, 6);
+	const day = deadline.substring(6, 8);
+	const fixedFormat = `${year}-${month}-${day}`;
+	const date = new Date(fixedFormat);
+	const options: Intl.DateTimeFormatOptions = {
+		// year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	};
+	return date.toLocaleDateString('en-US', options);
+}
 ---
 
 <html lang="en">
@@ -21,12 +37,13 @@ const data = await res.json();
 		<!-- Normalize CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
-		<title>Retreive and and display external API data with Astro</title>
+		<title>{title}</title>
 	</head>
 	<body>
 		
 		<header class="masthead">
-			<h1 class="site-title">Gallery</h1>
+			<h1 class="site-title">{title}</h1>
+			<h2 class="site-subtitle">Hover for more info, click to go to state voting site</h2>
 		</header>
 
 		<main id="content" class="main-area">
@@ -35,25 +52,25 @@ const data = await res.json();
 		  
 				<!-- Your API Data -->
 				{
-					data.map( item =>
-					<li class="card-item">
-						<a href="#">
-							<figure class="card">
-							<img src="https://assets.codepen.io/16425/image-placeholder.png" alt="Placeholder">
-							<figcaption class="caption">
-								<h3 class="caption-title">{item.name}</h3>
-								<p>{item.company.catchPhrase}</p>
-							</figcaption>
-							</figure>
-						</a>
-					</li> 
+					states.map( state =>
+						<li class="card-item">
+							<a href="#">
+								<figure class="card">
+								<img src="https://assets.codepen.io/16425/image-placeholder.png" alt="Placeholder">
+								<figcaption class="caption">
+									<h3 class="caption-title">{state.label}{state.emoji}</h3>
+									<p>Deadline: {formatDate(state.deadline)}</p>
+									<p>Primary date: {formatDate(state.primaryDate)}</p>
+									<p>Primary deadline: {formatDate(state.primaryDeadline)}</p>
+									<p>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}</p>
+									<p>Online accepted: {state.onlineAccepted?"yes":"no"}</p>
+								</figcaption>
+								</figure>
+							</a>
+						</li> 
 					)
 				}
-		  
 			</ul>
 		  </main>
-		  
-
-
 	</body>
 </html>
