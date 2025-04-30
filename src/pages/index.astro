@@ -54,17 +54,17 @@ function formatDate(deadline:string) {
 				{
 					states.map( state =>
 						<li class="card-item">
-							<a href="#">
+							<a href={state.url} target="_blank">
 								<figure class="card">
-								<img src="https://assets.codepen.io/16425/image-placeholder.png" alt="Placeholder">
-								<figcaption class="caption">
-									<h3 class="caption-title">{state.label}{state.emoji}</h3>
-									<p>Deadline: {formatDate(state.deadline)}</p>
-									<p>Primary date: {formatDate(state.primaryDate)}</p>
-									<p>Primary deadline: {formatDate(state.primaryDeadline)}</p>
-									<p>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}</p>
-									<p>Online accepted: {state.onlineAccepted?"yes":"no"}</p>
-								</figcaption>
+									<img src={`/states/${state.value.toLowerCase()}.svg`} alt={`${state.label} state flag`} class={`card-image flag-${state.value}`} />
+									<figcaption class="caption">
+										<h3 class="caption-title">{state.label} {state.emoji}</h3>
+										<p>Deadline: {formatDate(state.deadline)}</p>
+										<p>Primary date: {formatDate(state.primaryDate)}</p>
+										<p>Primary deadline: {formatDate(state.primaryDeadline)}</p>
+										<p>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}</p>
+										<p>Online accepted: {state.onlineAccepted?"yes":"no"}</p>
+									</figcaption>
 								</figure>
 							</a>
 						</li> 
