@@ -30,7 +30,7 @@ function formatDate(deadline:string) {
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/vote.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 
@@ -59,11 +59,13 @@ function formatDate(deadline:string) {
 									<img src={`/states/${state.value.toLowerCase()}.svg`} alt={`${state.label} state flag`} class={`card-image flag-${state.value}`} />
 									<figcaption class="caption">
 										<h3 class="caption-title">{state.label} {state.emoji}</h3>
-										<p>Deadline: {formatDate(state.deadline)}</p>
-										<p>Primary date: {formatDate(state.primaryDate)}</p>
-										<p>Primary deadline: {formatDate(state.primaryDeadline)}</p>
-										<p>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}</p>
-										<p>Online accepted: {state.onlineAccepted?"yes":"no"}</p>
+										<ul>
+											<li>Deadline: {formatDate(state.deadline)}
+											<li>Primary date: {formatDate(state.primaryDate)}
+											<li>Primary deadline: {formatDate(state.primaryDeadline)}
+											<li>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}
+											<li>Online accepted: {state.onlineAccepted?"yes":"no"}
+										</ul>
 									</figcaption>
 								</figure>
 							</a>
