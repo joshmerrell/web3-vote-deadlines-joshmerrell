@@ -21,3 +21,4 @@ All commands are run from the root of the project, from a terminal:
 # Sources
 - [Dedline API](dedline-api.netlify.app) ([API Info](https://github.com/dedline-io/dedline-api))
 - State flag SVGs from Wikipedia
+- [Fontshare](https://fontshare.com)
