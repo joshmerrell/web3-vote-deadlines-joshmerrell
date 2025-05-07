@@ -1,6 +1,9 @@
 ---
-// Import Stylesheet
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StateCard from '../components/StateCard.astro';
+import type { State } from '../types/index';
 
 // data source
 // replace temporary JSON placeholder API
@@ -10,74 +13,17 @@ const res = await fetch(source);
 // store retreived data
 const states: State[] = (await res.json()).states;
 
+
 const title = "US Voting Info";
 
-function formatDate(deadline:string) {
-	const year = parseInt(deadline.substring(0, 4));
-	const month = deadline.substring(4, 6);
-	const day = deadline.substring(6, 8);
-	const fixedFormat = `${year}-${month}-${day}`;
-	const date = new Date(fixedFormat);
-	const options: Intl.DateTimeFormatOptions = {
-		// year: 'numeric',
-		month: "long",
-		day: "numeric",
-	};
-	return date.toLocaleDateString('en-US', options);
-}
-
-// used for images that are smaller when exported to PNG
-function usePNG(state:State) {
-	return ["al","ak","az","ar","co","dc","ga","hi","in","md","mn","ms","nm","nc","oh","ok","ri","sc","tn","tx"].indexOf(state.value.toLowerCase()) == -1;
-}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/vote.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-
-		<!-- Normalize CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-
-		<title>{title}</title>
-	</head>
-	<body>
-		
-		<header class="masthead">
-			<h1 class="site-title">{title}</h1>
-			<h2 class="site-subtitle">Hover for more info, click to go to state voting site</h2>
-		</header>
-
-		<main id="content" class="main-area">
-
-			<ul class="cards">
-		  
-				<!-- Your API Data -->
-				{
-					states.map( state =>
-						<li class="card-item">
-							<a href={state.url} target="_blank">
-								<figure class="card">
-									<img src={`/states/${state.value.toLowerCase()}.${usePNG(state)?"png":"svg"}`} alt={`${state.label} state flag`} class={`card-image flag-${state.value}`} />
-									<figcaption class="caption">
-										<h3 class="caption-title">{state.label} {state.emoji}</h3>
-										<ul class="voting-info">
-											<li>Deadline: {formatDate(state.deadline)}
-											<li>Primary date: {formatDate(state.primaryDate)}
-											<li>Primary deadline: {formatDate(state.primaryDeadline)}
-											<li>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}
-											<li>Online accepted: {state.onlineAccepted?"yes":"no"}
-										</ul>
-									</figcaption>
-								</figure>
-							</a>
-						</li> 
-					)
-				}
-			</ul>
-		  </main>
-	</body>
-</html>
+<BaseLayout title={title}>
+	<Header title={title} />
+	<ul class="cards">
+		{states.map((state) => (
+			<StateCard state={state} />
+		))}
+	</ul>
+	<Footer />
+</BaseLayout>

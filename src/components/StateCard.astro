@@ -1,0 +1,42 @@
+---
+
+let { state } = Astro.props;
+import { type State } from "../types/index";
+
+function formatDate(deadline:string) {
+	const year = parseInt(deadline.substring(0, 4));
+	const month = deadline.substring(4, 6);
+	const day = deadline.substring(6, 8);
+	const fixedFormat = `${year}-${month}-${day}`;
+	const date = new Date(fixedFormat);
+	const options: Intl.DateTimeFormatOptions = {
+		// year: 'numeric',
+		month: "long",
+		day: "numeric",
+	};
+	return date.toLocaleDateString('en-US', options);
+}
+
+// used for images that are smaller when exported to PNG
+function usePNG(state:State) {
+	return ["al","ak","az","ar","co","dc","ga","hi","in","md","mn","ms","nm","nc","oh","ok","ri","sc","tn","tx"].indexOf(state.value.toLowerCase()) == -1;
+}
+---
+
+<li class="card-item">
+    <a href={state.url} target="_blank">
+        <figure class="card">
+            <img src={`/states/${state.value.toLowerCase()}.${usePNG(state)?"png":"svg"}`} alt={`${state.label} state flag`} class={`card-image flag-${state.value}`} />
+            <figcaption class="caption">
+                <h3 class="caption-title">{state.label} {state.emoji}</h3>
+                <ul class="voting-info">
+                    <li>Deadline: {formatDate(state.deadline)}</li>
+                    <li>Primary date: {formatDate(state.primaryDate)}</li>
+                    <li>Primary deadline: {formatDate(state.primaryDeadline)}</li>
+                    <li>Last minute accepted: {state.lastMinuteAccepted?"yes":"no"}</li>
+                    <li>Online accepted: {state.onlineAccepted?"yes":"no"}</li>
+                </ul>
+            </figcaption>
+        </figure>
+    </a>
+</li>
