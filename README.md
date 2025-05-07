@@ -1,11 +1,11 @@
-# External Data with Astro
-* Utilize Astro framework for
+# US State Voting Deadlines
+* Utilizes Astro framework for
 * Retrieving data
 * Templating data
 * Programmatically display data
 
-* Reminders:
-> DO NOT statically “hard code” the data
+<!-- * Reminders:
+> DO NOT statically “hard code” the data -->
 
 All commands are run from the root of the project, from a terminal:
 
