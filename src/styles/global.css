@@ -77,9 +77,9 @@ CSS Grid layout for wider screens, when browser supports grid:
 		flex-direction: column;
 		opacity: 0;
 
-		/* Alignment */
-		/* align-items: flex-end; */
-		/* justify-content: flex-end; */
+		h3 {
+			text-align: center;
+		}
 	}
 
 	a:focus .caption, a:hover .caption {

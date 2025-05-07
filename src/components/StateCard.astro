@@ -20,6 +20,15 @@ function formatDate(deadline:string) {
 function usePNG(state:State) {
 	return ["al","ak","az","ar","co","dc","ga","hi","in","md","mn","ms","nm","nc","oh","ok","ri","sc","tn","tx"].indexOf(state.value.toLowerCase()) == -1;
 }
+
+function stateLabel(state:State) {
+    let label = state.label;
+    if((state.emoji ?? "") == "") {
+        return label;
+    }
+    state.emoji = state.emoji.trim();
+    return state.emoji + " " + label + " " + state.emoji;
+}
 ---
 
 <li class="card-item">
@@ -27,7 +36,7 @@ function usePNG(state:State) {
         <figure class="card">
             <img src={`/states/${state.value.toLowerCase()}.${usePNG(state)?"png":"svg"}`} alt={`${state.label} state flag`} class={`card-image flag-${state.value}`} />
             <figcaption class="caption">
-                <h3 class="caption-title">{state.label} {state.emoji}</h3>
+                <h3 class="caption-title">{stateLabel(state)}</h3>
                 <ul class="voting-info">
                     <li>Deadline: {formatDate(state.deadline)}</li>
                     <li>Primary date: {formatDate(state.primaryDate)}</li>
