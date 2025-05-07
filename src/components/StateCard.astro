@@ -10,11 +10,10 @@ function formatDate(deadline:string) {
 	const fixedFormat = `${year}-${month}-${day}`;
 	const date = new Date(fixedFormat);
 	const options: Intl.DateTimeFormatOptions = {
-		// year: 'numeric',
 		month: "long",
 		day: "numeric",
 	};
-	return date.toLocaleDateString('en-US', options);
+	return date.toLocaleDateString("en-US", options);
 }
 
 // used for images that are smaller when exported to PNG
