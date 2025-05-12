@@ -27,7 +27,8 @@ function stateLabel(state:State) {
         return label;
     }
     state.emoji = state.emoji.trim();
-    return state.emoji + " " + label + " " + state.emoji;
+    const emoji = [...state.emoji];
+    return emoji[0] + " " + label + " " + emoji[0];
 }
 ---
 
